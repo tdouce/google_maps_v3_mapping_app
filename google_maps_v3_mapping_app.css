@@ -1,0 +1,111 @@
+
+/* Table information that pops up to right of map
+    when google map mark or select options is clicked */
+
+#table_tabs {
+    text-align: center;
+    font-weight: bold;
+    color: #287FAD;
+} 
+
+.site_name {
+    font-weight: bold; 
+    text-align:center;
+}
+
+.contacts_description {
+    font-weight:bold;
+}
+
+#site_content {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#table_content {
+    width: 100%;
+    margin: 50px 0 0 0;
+}
+
+.table_content_border {
+    border: 3px solid #9BC8E0;
+}
+
+.focus_hilight {
+    background-color: #d6e8ee;
+    cursor: pointer;
+}
+
+.focus_table_background {
+    background-color: #d6e8ee;
+}
+
+.contacts_header {
+    font-weight: bold;
+}
+
+
+/* Google map and container */
+
+#map-container {
+    padding: 6px;
+    border-width: 1px;
+    border-style: solid;
+    border: 6px solid #d6e8ee;
+    border-radius: 15px;
+    height: 100%; 
+    width: 93%;
+}
+
+#map_canvas {
+    height: 420px; 
+    width: 100%;
+}
+
+
+/* Google map controls under map */
+
+#map_controller_wrapper {
+    text-align: center;
+    margin-top: 8px;
+}
+
+#to_full_extent { 
+    text-align: center; 
+    margin-top: 8px;
+}
+
+.zoom_text_color {
+    color: #287FAD;
+    cursor: pointer;
+}
+
+.map_layer_headers {
+   text-align: center; 
+   padding: 0 0 15px 0;
+}
+
+
+/* Additional map layers under map */
+#map_layers {
+    width: 450px;
+    padding: 20px 0 0 50px;
+}
+
+#map_table_data {
+    width:530px;
+}
+
+#help_icon {
+    text-align: center;
+    padding: 30px 0 0 0;
+}
+
+
+/* Select options drop down over google map */
+
+#select_options {
+    text-align: center;
+    margin: 10px 0 20px 0;
+}
+

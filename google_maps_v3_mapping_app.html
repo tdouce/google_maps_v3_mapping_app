@@ -1,0 +1,193 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html>
+
+<head>
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-1"/>
+
+<link rel="stylesheet" type="text/css" href="google_maps_v3_mapping_app.css" media="screen"/>
+<script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js" type="text/javascript"></script>
+<script src="google_maps_v3_mapping_app.js" type="text/javascript"></script>
+
+</head>
+
+<body>
+
+  <div style="width: 900px;">
+      <table border="0" cellpadding="2" cellspacing="0" width="100%" >
+              <tr valign="top">
+                  <td id="map_table_data">
+                            <div>
+                                <form id="select_options" name="formSites"  action="">
+                                    <select id="build_select"  name="select" >
+                                    </select>
+                                </form>
+                           
+                                <div>
+                                    <div id="map-container" >
+                                        <div id="map_holder" >
+                                            <div id="map_canvas" ><p>Google map of all results for this page.</p></div>
+                                        </div>
+                                        <p id="map_controller_wrapper" >
+                                        <span id="to_full_extent" class="map_controller" >Zoom to full extent</span> |
+                                        <span id="reset" class="map_controller" >Remove All Layers </span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                    </td>
+                    <td>
+                         <table id="table_content"  border="0"  >
+                         
+                            <tr id="site_info" class="show_point" >
+                              <td class="map_td" colspan="3" >
+                                    <table id="site_content" border="0" >
+                                    
+                                        <tr id="table_tabs"  >
+                                            <td id="site_info_tab" class="hover" data-source="site_information" >Site Info</td>
+                                            <td class="hover" data-source="photos" >Photos</td>
+                                            <td class="hover" data-source="contacts" >Contacts</td>
+                                            <td class="hover" data-source="site_links" >Site Links</td>
+                                        </tr>
+                                        <tr id="lter_name">
+                                            <td colspan="4" >
+                                                <h3 class="site_name"  ></h3>
+                                            </td>
+                                        </tr>
+                                        <tr id="site_information"  > 
+                                            <td colspan="4" >
+                                                <a class="home_page" href="" target="" >website</a> | <a class="site_profile" href="" target="" >site profile</a> 
+                                                <br />
+                                                <p class="description"></p>
+                                            </td>
+                                        </tr>
+
+                                        <tr id="photos"  > 
+                                            <td colspan="4" >
+                                                <img class="image" src="" title="" />
+                                                <br /> 
+                                                <a class="gallery" href="" target="" >Gallery</a> | <a class="slide_show" href="" target="" >Slide show</a>
+                                            </td>
+                                        </tr>
+
+                                        <tr id="contacts" > 
+                                            <td colspan="4" >
+                                                <p>
+                                                <span class="contacts_description" >Lead PI:</span> <span class="principal" ></span><br />
+                                                <span class="contacts_description" >Data Manager:</span> <span class="info_manager"></span><br />
+                                                <span class="contacts_description" >Contact:</span> <span class="primary_contact"></span><br />
+                                                <span class="contacts_description" >Outreach:</span> <span class="outreach"></span>
+                                                </p>
+                                                <p><span style="font-weight:bold;" >Address:</span><br />
+                                                <span class="address1"></span><br />
+                                                <span class="address2"></span><br />
+                                                <span class="address3"></span>
+                                                <span class="city"></span>,
+                                                <span class="state"></span>
+                                                <span class="zip"></span>
+                                                </p>
+
+                                                <p>
+                                                <span class="contacts_description" > Phone: </span><span class="phone"></span><br />
+                                                <span class="contacts_description"> Fax: </span> <span class="fax"></span><br />
+                                                <span class="contacts_description"> Email: </span> <span class="email"></span><br />
+                                                </p>
+                                            </td>
+                                        </tr>
+
+                                        <tr id="site_links" > 
+                                            <td colspan="4" >
+                                                <a class="data_url" href="" target="">Data Catalog</a><br />
+                                                <a class="personnel_url" href="" target="">Personnel</a><br />
+                                                <a class="biblio_url" href="" target="">Bibliography</a><br />
+                                                <a class="education_url" href="" target="">Outreach</a><br />
+                                            </td>
+                                        </tr>
+
+                                    </table>
+                              </td>
+                            </tr>
+                          </table>
+                    </td>
+
+                </tr>
+                <tr>
+                    <td> 
+                        <table id="map_layers"  border="0"> 
+                            <tr>
+                                <th class="map_layer_headers" >Map Layers</th>
+                                <th class="map_layer_headers" colspan="3">Downloads</th>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input id="study_domain" class="layer" data-kmz="files/lterDomains_110410.kmz" data-shp="files/lterDomains_040110.zip" data-meta="files/lterDomains_040110_metadata.htm" type="checkbox" name="box" value="study_domain" /> Study Domains
+                                </td>
+                                <td>
+                                    <input class="download_kmz" type="button" name="study_domain" value=".kmz" alt="test"/>
+                                </td>
+                                <td>
+                                    <input class="download_shp" type="button" name="study_domain" value=".shp"/>
+                                </td>
+                                <td>
+                                    <input class="download_meta" type="button" name="study_domain" value="meta"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input id="gage_station" class="layer" data-kmz="files/gages_033110.kmz"  data-shp="files/gages.zip" type="checkbox" name="box" value="study_domain" /> Gage Stations 
+                                </td>
+                                <td>
+                                    <input class="download_kmz" type="button" name="gage_station" value=".kmz"/>
+                                </td>
+                                <td>
+                                    <input class="download_shp" type="button" name="gage_station" value=".shp"/>
+                                </td>
+                                <td>
+                                    <input  disabled="disabled" type="button" name="gage_station" value="meta"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input id="weather" class="layer"  data-kmz="files/siteWeather_040310.kmz"  data-shp="files/gages.zip" type="checkbox" name="box" value="study_domain" /> Weather 
+                                </td>
+                                <td>
+                                    <input class="download_kmz" type="button" name="weather" value=".kmz"/>
+                                </td>
+                                <td>
+                                    <input type="button" disabled="disabled" name="weather" value=".shp"/>
+                                </td>
+                                <td>
+                                    <input type="button"  disabled="disabled" name="weather" value="meta"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input id="ecoregion" class="layer" data-kmz="files/terrestrialecoregions_033110.kmz" data-shp="files/terrestrialecoregions.zip" data-meta="files/terrestrialecoregions.htm" type="checkbox" name="box" value="study_domain" /> Ecoregions 
+                                </td>
+                                <td>
+                                    <input class="download_kmz" type="button" name="ecoregion" value=".kmz"/>
+                                </td>
+                                <td>
+                                    <input class="download_shp" type="button" name="ecoregion" value=".shp"/>
+                                </td>
+                                <td>
+                                    <input class="download_meta" type="button" name="ecoregion" name="ecoregion"  value="meta"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4" id="help_icon" >
+                                    <a href="http://www.lternet.edu/map/help.php" target="_blank"> <img src="http://www.lternet.edu/map/images/help_35x35.png" alt="help" width="35" height="35" border="0" title='Help'> </a>
+                                </td>
+                            </tr>
+                            
+                        </table>
+                    </td>
+                    <td></td>
+                </tr>
+        </table>
+  </div>
+        
+</body>
+
+</html>
