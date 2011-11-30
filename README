@@ -1,1 +1,3 @@
-A google maps v3 mapping application.  Implements JQuery to parse an xml file and to populate the google map and html.
+A google maps v3 mapping application.  Implements JQuery to parse an xml file and to populate the
+google map and html. The html "communicates" with the google map so it appears that when a user
+interacts with the html then the google maps also responds, and vice versa. 
