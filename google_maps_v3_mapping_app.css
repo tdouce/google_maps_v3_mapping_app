@@ -44,6 +44,18 @@
     font-weight: bold;
 }
 
+.image {
+    border: 3px solid #9BC8E0;
+    padding: 2px; 
+    display: block;
+    margin-left: auto; 
+    margin-right: auto;
+}
+
+.links_container {
+    text-align: center;
+    padding: 0 0 10px 0;
+}
 
 /* Google map and container */
 
