@@ -109,6 +109,11 @@ $(document).ready(function(){
         $('#site_content' ).find('.personnel_url').attr(  { href: object.attr('personnel_url') , target: "_blank"} ); 
         $('#site_content' ).find('.biblio_url').attr(  { href: object.attr('biblio_url') , target: "_blank"} ); 
         $('#site_content' ).find('.education_url').attr(  { href: object.attr('education_url') , target: "_blank"} ); 
+
+        // Show the table data for each site.  This needs to be here if we closing the table data div when a
+        // user closes the associated infowindow 
+        $('#table_content').show();
+
     };
 
     // Function used to to build listener for when google map marker is clicked and to add site to
@@ -169,6 +174,12 @@ $(document).ready(function(){
     var infowindow = new google.maps.InfoWindow();
     var marker;
     var bounds = new google.maps.LatLngBounds();
+
+    //When the infowindow is closed, then hide the table data div (i.e. the one that holds
+    // the info about a specific site and has tabs)
+    google.maps.event.addListener(infowindow, 'closeclick', function() {
+        $('#table_content').hide();
+    });
 
 
     // Function invoked in the ajax call
@@ -248,11 +259,12 @@ $(document).ready(function(){
         kml_layers = [];
 
         // Looop through each input with class '.clickable', get the data-url attribute and build a
-        // google maps kmllayer object
+        // google maps kmllayer object.  In order to remain at the same extent/zoom level when the
+        // kml/kmz is overlayed on the map, you HAVE to pass in the 'preserveViewport' option as
+        // 'true'. Else, the zoom level/extent is automatically set to zoom all the way.
         $('.layer').each(function() {
-            kml_layers[ $(this).attr('id') ] = new google.maps.KmlLayer( 'http://www.lternet.edu/sites1/' + $(this).attr('data-kmz') );
+            kml_layers[ $(this).attr('id') ] = new google.maps.KmlLayer( 'http://www.lternet.edu/sites1/' + $(this).attr('data-kmz'), {preserveViewport: true} );
         });
-        
 
         // When checkbox is clicked add or remove the associated kml
         $('.layer').click(function(){
