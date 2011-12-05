@@ -1,6 +1,5 @@
 
 $(document).ready(function(){
-    alert('test');
 
     // Delete skype css that sometimes adds unwanted and unfinished markup (ie. skype text) in the
     // table data (contact information about a site)
@@ -11,19 +10,12 @@ $(document).ready(function(){
     
 
     // location of xml file
-    var xml_url_location =  "http://gce-lter.marsci.uga.edu/public/file_pickup/Travis/lter_maps.xml";
+    var xml_url_location = "http://www.lternet.edu/map/harvest.php"
 
     // first select option in drop down
     var first_select_option = '- - - - - - - - - - Zoom to LTER site - - - - - - - - -';
 
-    // Get xml file if status 200 and invoke function to build map and select options
-    $.ajax({
-        type: "GET",
-        url: xml_url_location,
-        dataType: "xml",
-        success: xmlParser_map_select_click
-    });
-
+    var zoom_level_when_selected = 3;
 
     // Add text as first option in select options 
     $('#build_select').append(
@@ -48,8 +40,6 @@ $(document).ready(function(){
             };
     };
 
-    // Function that decides whether or not to show the data table row (the one with 'tabs')
-    should_show_data_table();
 
     // Function used to generate html content
     function render_page_content( object ){
@@ -111,6 +101,7 @@ $(document).ready(function(){
         $('#site_content' ).find('.biblio_url').attr(  { href: object.attr('biblio_url') , target: "_blank"} ); 
         $('#site_content' ).find('.education_url').attr(  { href: object.attr('education_url') , target: "_blank"} ); 
 
+
         // Show the table data for each site.  This needs to be here if we closing the table data div when a
         // user closes the associated infowindow 
         $('#table_content').show();
@@ -139,9 +130,13 @@ $(document).ready(function(){
 
             should_show_data_table();
 
+            var lat = markers[ $('#build_select').val() ][2];
+            var lng =markers[ $('#build_select').val() ][3]; 
+            var zoom = map.getZoom();
+
             // Pan to associated marker and set zoom
             map.panTo( new google.maps.LatLng( markers[ $('#build_select').val() ][2], markers[ $('#build_select').val() ][3] ));
-            map.setZoom(7);
+            map.setZoom( zoom_level_when_selected );
 
             // Grab the object from the associative array that we created earlier and set the
             // infowindow value and open up the infowindow
@@ -154,35 +149,11 @@ $(document).ready(function(){
         $('#build_select').append(
             $('<option></option>').html( object.attr('site_name') )         
         );
-
+        
+         
     };
 
-    // Array used to hold marker objects so we can retrieve them
-    var markers = [];
-
-    var map; 
-
-    var myOptions = {
-        zoom: 1,
-        center: new google.maps.LatLng( 0, 0 ),
-        navigationControl: true,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
-
-    var map =  new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-
-    // Instantiate variable for info window and marker
-    var infowindow = new google.maps.InfoWindow();
-    var marker;
-    var bounds = new google.maps.LatLngBounds();
-
-    //When the infowindow is closed, then hide the table data div (i.e. the one that holds
-    // the info about a specific site and has tabs)
-    google.maps.event.addListener(infowindow, 'closeclick', function() {
-        $('#table_content').hide();
-    });
-
-
+   
     // Function invoked in the ajax call
     function xmlParser_map_select_click(xml) {
        
@@ -195,12 +166,8 @@ $(document).ready(function(){
 
             bounds.extend( new google.maps.LatLng( $(this).attr('latitude'), $(this).attr('longitude') ) );        
 
-            // Assign site_name from xml and site_id
-            var site_name =  $(this).attr('site_name');      
-            var site_id = $(this).attr('site_id');
-            
             // Invoke function to generate the page html content
-            set_marker_selectoptions_content(marker, site_name, $(this), $(this).attr('latitude'), $(this).attr('longitude') );
+            set_marker_selectoptions_content(marker, $(this).attr('site_name'), $(this), $(this).attr('latitude'), $(this).attr('longitude') );
 
         });
 
@@ -216,7 +183,7 @@ $(document).ready(function(){
 
                         // Pan to associated marker and set zoom
                         map.panTo( new google.maps.LatLng($(this).attr('latitude'), $(this).attr('longitude'))  );
-                        map.setZoom( 7 );
+                        map.setZoom( zoom_level_when_selected );
 
                         // Grab the object from the associative array that we created earlier and set the
                         // infowindow value and open up the infowindow
@@ -266,6 +233,7 @@ $(document).ready(function(){
         $('.layer').each(function() {
             kml_layers[ $(this).attr('id') ] = new google.maps.KmlLayer( 'http://www.lternet.edu/sites1/' + $(this).attr('data-kmz'), {preserveViewport: true} );
         });
+        
 
         // When checkbox is clicked add or remove the associated kml
         $('.layer').click(function(){
@@ -282,7 +250,6 @@ $(document).ready(function(){
                 kml_layers[ $(this).attr('id') ].setMap(null);
             }
 
-            //fit_markers_to_map();
         });
 
 
@@ -294,7 +261,6 @@ $(document).ready(function(){
                 $(this).removeAttr('checked');
             });
 
-            //fit_markers_to_map();
         });
 
 
@@ -380,7 +346,49 @@ $(document).ready(function(){
 
     };
 
+
+
+    // Array used to hold marker objects so we can retrieve them
+    var markers = [];
+
+    var map; 
+
+    var myOptions = {
+        zoom: 1,
+        center: new google.maps.LatLng( 0, 0 ),
+        navigationControl: true,
+        //mapTypeId: google.maps.MapTypeId.ROADMAP
+        //mapTypeId: google.maps.MapTypeId.SATELLITE,
+        mapTypeId: google.maps.MapTypeId.HYBRID,
+        overviewMapControl: true
+    };
+
+    var map =  new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+
+    // Instantiate variable for info window and marker
+    var infowindow = new google.maps.InfoWindow();
+    var marker;
+    var bounds = new google.maps.LatLngBounds();
+
+
+    //When the infowindow is closed, then hide the table data div (i.e. the one that holds
+    // the info about a specific site and has tabs)
+    google.maps.event.addListener(infowindow, 'closeclick', function() {
+        $('#table_content').hide();
+    });
+
+
     // Invokes functions
+    
+    // Get xml file if status 200 and invoke function to build map and select options
+    $.ajax({
+        type: "GET",
+        url: xml_url_location,
+        dataType: "xml",
+        success: xmlParser_map_select_click
+    });
+
+    should_show_data_table();
     add_remove_google_layers();
     table_data_functionality();
 
