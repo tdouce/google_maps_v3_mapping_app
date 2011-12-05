@@ -10,7 +10,7 @@ $(document).ready(function(){
     
 
     // location of xml file
-    var xml_url_location = "http://www.lternet.edu/map/harvest.php"
+    var xml_url_location =  "http://gce-lter.marsci.uga.edu/public/file_pickup/Travis/lter_maps.xml";
 
     // first select option in drop down
     var first_select_option = '- - - - - - - - - - Zoom to LTER site - - - - - - - - -';
