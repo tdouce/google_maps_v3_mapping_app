@@ -1,5 +1,6 @@
 
 $(document).ready(function(){
+    alert('test');
 
     // Delete skype css that sometimes adds unwanted and unfinished markup (ie. skype text) in the
     // table data (contact information about a site)
